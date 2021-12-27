@@ -16,7 +16,12 @@
 		<main>
 			<ul></ul>
 			<input type="text" id="todo" />
-			<button onclick="addTodo(todoName.value)">Adicionar Tarefa</button>
+			<button onclick="addTodo(todoName.value)" id="addButton">
+				Adicionar Tarefa
+			</button>
+			<button onclick="clearTodos()" id="clearButton">
+				Remover Tarefas Completadas
+			</button>
 		</main>
 	</body>
 	<script src="./dist/script.js"></script>

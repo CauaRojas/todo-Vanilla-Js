@@ -1,9 +1,10 @@
 const list = document.querySelector('ul'),
 	todoName = document.querySelector('input'),
 	addTodoButton = document.querySelector('button');
-
+const trashCan = document.createElement('img');
 let countTodos = 0;
 const todos: Array<Todo> = [];
+
 class Todo {
 	constructor(public todo: string) {
 		this.id = countTodos;
@@ -27,7 +28,6 @@ class Todo {
 			const removeButton = document.createElement('button');
 			removeButton.className = 'remove-button';
 			removeButton.id = this.element.id + 'button';
-			removeButton.innerText = 'X';
 			removeButton.addEventListener('click', (e) => {
 				const elementId = parseId(e);
 				list?.removeChild(
@@ -45,9 +45,15 @@ class Todo {
 }
 
 const addTodo = (text: string) => {
+	if (text === '') return;
 	todos.push(new Todo(text));
 };
-
+const clearTodos = () => {
+	const completedTodos = [...document.getElementsByClassName('completed')];
+	completedTodos.forEach((todo) => {
+		todo.remove();
+	});
+};
 const parseId = (e: MouseEvent): number => {
 	try {
 		return parseInt((e.target as HTMLLIElement).id.split('todo')[1]);
