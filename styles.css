@@ -1,0 +1,26 @@
+html {
+	font-size: 10px;
+}
+main {
+	width: 100%;
+	font-size: 3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+main > ul {
+	width: 50%;
+	text-align: center;
+	position: relative;
+	left: -1%;
+}
+main > button,
+main > input {
+	width: 25%;
+	font-size: 2rem;
+}
+main > button {
+	margin-top: 1%;
+}
