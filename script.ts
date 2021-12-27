@@ -14,9 +14,7 @@ class Todo {
 		this.element.innerText = this.todo;
 		this.element.id = `todo${this.id}`;
 		this.element.addEventListener('dblclick', (e) => {
-			const elementId = parseInt(
-				(e.target as HTMLLIElement).id.split('todo')[1]
-			);
+			const elementId = parseTodoId(e);
 			todos[elementId].toggleTodo();
 		});
 		list?.append(this.element);
@@ -30,4 +28,8 @@ class Todo {
 
 const addTodo = (text: string) => {
 	todos.push(new Todo(text));
+};
+
+const parseTodoId = (e: MouseEvent): number => {
+	return parseInt((e.target as HTMLLIElement).id.split('todo')[1]);
 };
