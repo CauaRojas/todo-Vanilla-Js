@@ -21,6 +21,12 @@ main > input {
 	width: 25%;
 	font-size: 2rem;
 }
+.completed {
+	text-decoration: line-through;
+}
+li::selection {
+	background-color: #dddddd;
+}
 main > button {
 	margin-top: 1%;
 }
