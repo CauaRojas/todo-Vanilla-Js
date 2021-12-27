@@ -3,6 +3,7 @@
         "module": "ESNext",
         "strict": true,
         "target": "ESNEXT",
+        "outDir": "dist"
         
     },
     "exclude": [
