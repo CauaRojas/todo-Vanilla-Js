@@ -1,5 +1,6 @@
 html {
 	font-size: 10px;
+	font-family: sans-serif;
 }
 main {
 	width: 100%;
@@ -12,7 +13,7 @@ main {
 
 main > ul {
 	width: 50%;
-	text-align: center;
+	list-style: none;
 	position: relative;
 	left: -1%;
 }
@@ -23,9 +24,28 @@ main > input {
 }
 .completed {
 	text-decoration: line-through;
+	text-decoration-color: red;
 }
 li::selection {
 	background-color: #dddddd;
+}
+/* .todo::before {
+	content: '';
+	position: absolute;
+	right: 52%;
+	top: 28%;
+	border-radius: 100%;
+	width: 0.5em;
+	height: 0.5em;
+	background-color: #000;
+} */
+.todo {
+	background-image: url('circle.svg');
+	background-repeat: no-repeat;
+	overflow-wrap: break-word;
+	background-position: 0;
+	padding-left: 0.7em;
+	background-size: 0.4em;
 }
 main > button {
 	margin-top: 1%;

@@ -13,6 +13,7 @@ class Todo {
 
 		this.element.innerText = this.todo;
 		this.element.id = `todo${this.id}`;
+		this.element.className = 'todo';
 		this.element.addEventListener('dblclick', (e) => {
 			const elementId = parseId(e);
 			todos[elementId].toggleTodo();
