@@ -30,3 +30,6 @@ li::selection {
 main > button {
 	margin-top: 1%;
 }
+.remove-button {
+	margin-left: 2%;
+}

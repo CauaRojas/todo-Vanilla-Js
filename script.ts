@@ -14,7 +14,7 @@ class Todo {
 		this.element.innerText = this.todo;
 		this.element.id = `todo${this.id}`;
 		this.element.addEventListener('dblclick', (e) => {
-			const elementId = parseTodoId(e);
+			const elementId = parseId(e);
 			todos[elementId].toggleTodo();
 		});
 		list?.append(this.element);
@@ -22,7 +22,24 @@ class Todo {
 	id: Number;
 	element: HTMLLIElement;
 	toggleTodo() {
-		this.element.classList.toggle('completed');
+		if (this.element.classList.toggle('completed')) {
+			const removeButton = document.createElement('button');
+			removeButton.className = 'remove-button';
+			removeButton.id = this.element.id + 'button';
+			removeButton.innerText = 'X';
+			removeButton.addEventListener('click', (e) => {
+				const elementId = parseId(e);
+				list?.removeChild(
+					document.getElementById('todo' + elementId) as Node
+				);
+			});
+			this.element.append(removeButton);
+		} else {
+			this.element.removeChild(
+				document.getElementById(this.element.id + 'button') as Node
+			);
+			console.log('tirei butão');
+		}
 	}
 }
 
@@ -30,6 +47,12 @@ const addTodo = (text: string) => {
 	todos.push(new Todo(text));
 };
 
-const parseTodoId = (e: MouseEvent): number => {
-	return parseInt((e.target as HTMLLIElement).id.split('todo')[1]);
+const parseId = (e: MouseEvent): number => {
+	try {
+		return parseInt((e.target as HTMLLIElement).id.split('todo')[1]);
+	} catch {
+		return parseInt(
+			(e.target as HTMLLIElement).id.split('todo')[1].split('button')[0]
+		);
+	}
 };
