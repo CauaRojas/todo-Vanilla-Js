@@ -77,12 +77,32 @@ class Todo {
 				);
 			});
 			this.element.append(removeButton);
+
+			//Updates the state of the item on localStorage
+			const newTodos: Array<objTodo> = JSON.parse(
+				localStorage.getItem('todos') || '[]'
+			);
+			const returnedID = newTodos.findIndex(
+				(todo) => todo.id === this.id
+			);
+			if (returnedID !== -1) newTodos[returnedID].isDone = true;
+			localStorage.setItem('todos', JSON.stringify(newTodos));
 		} else {
 			//If the todo was completed and them you click to undo the todo
 			//It removes the remove button
 			this.element.removeChild(
 				document.getElementById(this.element.id + 'button') as Node
 			);
+
+			//Changes the is done state on the localStorage
+			const newTodos: Array<objTodo> = JSON.parse(
+				localStorage.getItem('todos') || '[]'
+			);
+			const returnedID = newTodos.findIndex(
+				(todo) => todo.id === this.id
+			);
+			if (returnedID !== -1) newTodos[returnedID].isDone = false;
+			localStorage.setItem('todos', JSON.stringify(newTodos));
 		}
 	}
 }
@@ -129,8 +149,10 @@ const retriveTodos = () => {
 	const todosJson: Array<objTodo> = JSON.parse(
 		localStorage.getItem('todos') || '[]'
 	);
+	localStorage.setItem('todos', '[]');
 	todosJson.forEach((todo) => {
 		todos.push(new Todo(todo.todo));
+		if (todo.isDone) todos[countTodos - 1].toggleTodo();
 	});
 };
 retriveTodos();
