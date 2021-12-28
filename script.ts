@@ -111,6 +111,12 @@ const addTodo = (text: string) => {
 	if (text === '') return;
 	todos.push(new Todo(text));
 };
+todoName?.addEventListener('keyup', (e) => {
+	if (e.key === 'Enter') {
+		e.preventDefault();
+		if (todoName.value !== '') addTodo(todoName.value);
+	}
+});
 const clearTodos = (e: MouseEvent) => {
 	const completedTodos = [...document.getElementsByClassName('completed')];
 
