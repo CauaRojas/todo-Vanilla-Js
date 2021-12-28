@@ -1,41 +1,61 @@
+//saving the DOM elements for later use
 const list = document.querySelector('ul'),
 	todoName = document.querySelector('input'),
 	addTodoButton = document.querySelector('button'),
 	removeTodoButton: HTMLButtonElement =
 		//bypassing typescript
 		document.querySelector('#clear-button') ?? new HTMLButtonElement();
-const trashCan = document.createElement('img');
+
+//A count how many todos are created
+//its used to create a id for every todo
 let countTodos = 0;
+
+//array of every todo in the page
 const todos: Array<Todo> = [];
+
+//Interface of the Todos stored in the localStorage
 interface objTodo {
 	todo: string;
 	id: number;
+	isDone?: boolean;
 }
 
+//Main Class of the file
 class Todo {
+	id: Number;
+	element: HTMLLIElement;
+	// Constructor recives a string to be the text of the todo
 	constructor(public todo: string) {
 		this.id = countTodos;
 		this.element = document.createElement('li');
 
 		countTodos++;
+
+		//Get the todos from local storage
 		const todosJson: Array<objTodo> = JSON.parse(
 			localStorage.getItem('todos') || '[]'
 		);
+		//Add a new todo to the array
 		todosJson.push({ todo, id: this.id as number });
+		//Push the old todos plus the new one to the local storage
 		localStorage.setItem('todos', JSON.stringify(todosJson));
+
+		//Setup the todo LI element on the DOM
 		this.element.innerText = this.todo;
 		this.element.id = `todo${this.id}`;
 		this.element.className = 'todo';
 		this.element.addEventListener('dblclick', (e) => {
+			//When the todo gets double clicked it triggers the toggle todo method
 			const elementId = parseId(e);
 			todos[elementId].toggleTodo();
 		});
 		list?.append(this.element);
 	}
-	id: Number;
-	element: HTMLLIElement;
+
 	toggleTodo() {
 		if (this.element.classList.toggle('completed')) {
+			//If the todo has been assigned to completed it adds a button to remove the todo
+			// On its side
 			const removeButton = document.createElement('button');
 			removeButton.className = 'remove-button';
 			removeButton.id = this.element.id + 'button';
@@ -45,6 +65,8 @@ class Todo {
 					localStorage.getItem('todos') || ''
 				);
 				if (todosJson.length > 0) {
+					//If the localStorage has the todo stored on it, it removes the todo from
+					//the array and them pushes the todo to the localStorage
 					const newTodos = todosJson.filter(
 						(newTodo) => newTodo.id !== elementId
 					);
@@ -56,6 +78,8 @@ class Todo {
 			});
 			this.element.append(removeButton);
 		} else {
+			//If the todo was completed and them you click to undo the todo
+			//It removes the remove button
 			this.element.removeChild(
 				document.getElementById(this.element.id + 'button') as Node
 			);
